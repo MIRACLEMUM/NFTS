@@ -5,7 +5,13 @@ import TrendingCollections from "./components/TrendingCollections";
 import TopCreators from "./components/TopCreators";
 import BrowseCategoriesSection from "./components/BrowseCategoriesSection";
 import DiscoverNFTs from "./components/DiscoverNFTs";
-import NFTDetails from "./pages/NFTDetails"; // 👈 create this file
+import NFTDetails from "./pages/NFTDetails"; 
+import NextSection from "./components/NextSection"; 
+import HowItWorks from "./components/HowItWorks";
+import NewsletterCard from "./components/NewsletterCard";
+import Footer from "./components/Footer";
+
+
 
 function App() {
   return (
@@ -21,6 +27,10 @@ function App() {
               <TopCreators />
               <BrowseCategoriesSection />
               <DiscoverNFTs />
+              <NextSection /> 
+              <HowItWorks />
+              <NewsletterCard />
+              <Footer />
             </>
           }
         />

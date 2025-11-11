@@ -1,5 +1,5 @@
 import React from "react";
-import { Eye } from "lucide-react";
+import { Eye } from "lucide-react"; // 👈 Added back since your button uses it
 import { useNavigate } from "react-router-dom";
 
 interface NFT {
@@ -9,7 +9,6 @@ interface NFT {
   img: string;
   price: string;
   bid: string;
-  icon: string;
 }
 
 const nfts: NFT[] = [
@@ -20,7 +19,6 @@ const nfts: NFT[] = [
     img: "/nft-1.png",
     price: "1.63 ETH",
     bid: "0.33 wETH",
-    icon: "/avat.png",
   },
   {
     id: 2,
@@ -29,7 +27,6 @@ const nfts: NFT[] = [
     img: "/video.png",
     price: "1.63 ETH",
     bid: "0.33 wETH",
-    icon: "",
   },
   {
     id: 3,
@@ -38,7 +35,6 @@ const nfts: NFT[] = [
     img: "/nft-3.png",
     price: "1.63 ETH",
     bid: "0.33 wETH",
-    icon: "",
   },
 ];
 
@@ -79,8 +75,14 @@ const DiscoverNFTs: React.FC = () => {
 
             <div className="p-5">
               <h3 className="text-lg font-semibold mb-2">{nft.title}</h3>
+
+              {/* ✅ Updated avatar image here */}
               <p className="flex items-center text-sm text-gray-400 mb-4">
-                <span className="w-6 h-6 bg-gray-500 rounded-full mr-2"></span>
+                <img
+                  src="/avat.png" // 👈 your avatar image file (place it in /public)
+                  alt={nft.creator}
+                  className="w-6 h-6 rounded-full mr-2 object-cover border border-[#A259FF]"
+                />
                 {nft.creator}
               </p>
 
