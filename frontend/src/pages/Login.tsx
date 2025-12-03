@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
 
+
 export default function LoginPage() {
   const [darkMode, setDarkMode] = useState(true);
 
