@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTheme } from "../context/ThemeContext"; // ✅ get darkMode
 
 interface Category {
   title: string;
@@ -18,11 +19,19 @@ const categories: Category[] = [
 ];
 
 const Categories: FC = () => {
+  const { darkMode } = useTheme(); // ✅ get darkMode
+
   return (
-    <section className="bg-[#2B2B2B] text-white py-16 px-6 md:px-12">
+    <section
+      className={`py-16 px-6 md:px-12 transition-colors duration-300 ${
+        darkMode ? "bg-[#2B2B2B] text-white" : "bg-gray-100 text-black"
+      }`}
+    >
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold mb-2">Browse Categories</h2>
-        <p className="text-lg text-gray-300 mb-10">
+        <h2 className={`text-4xl md:text-5xl font-bold mb-2 ${darkMode ? "text-white" : "text-black"}`}>
+          Browse Categories
+        </h2>
+        <p className={`text-lg mb-10 ${darkMode ? "text-gray-300" : "text-gray-700"}`}>
           Explore a variety of categories in the NFT Marketplace.
         </p>
 
@@ -31,7 +40,9 @@ const Categories: FC = () => {
           {categories.map((cat) => (
             <div
               key={cat.title}
-              className="relative group rounded-2xl overflow-hidden bg-[#3B3B3B] transition-transform duration-500 hover:-translate-y-1 hover:shadow-xl"
+              className={`relative group rounded-2xl overflow-hidden transition-transform duration-500 hover:-translate-y-1 hover:shadow-xl ${
+                darkMode ? "bg-[#3B3B3B]" : "bg-white"
+              }`}
             >
               {/* Image */}
               <img
@@ -50,8 +61,14 @@ const Categories: FC = () => {
               </div>
 
               {/* Category title bar */}
-              <div className="absolute bottom-0 left-0 w-full bg-[#3B3B3B] py-4 px-6">
-                <h3 className="text-lg font-semibold">{cat.title}</h3>
+              <div
+                className={`absolute bottom-0 left-0 w-full py-4 px-6 transition-colors duration-300 ${
+                  darkMode ? "bg-[#3B3B3B]" : "bg-gray-200"
+                }`}
+              >
+                <h3 className={`${darkMode ? "text-white" : "text-black"} text-lg font-semibold`}>
+                  {cat.title}
+                </h3>
               </div>
             </div>
           ))}

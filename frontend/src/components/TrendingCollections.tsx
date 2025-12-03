@@ -1,16 +1,23 @@
 import type { FC } from "react";
 import nftImage from "/hero_img.svg";
 import profileImg from "/avat.png"; // Replace with your actual profile image
+import { useTheme } from "../context/ThemeContext"; // ✅ import theme hook
 
 const TrendingCollections: FC = () => {
+  const { darkMode } = useTheme(); // ✅ get darkMode
+
   return (
-    <section className="bg-[#2e2e2e] text-white py-16 px-6 md:px-20">
+    <section
+      className={`py-16 px-6 md:px-20 transition-colors duration-300 ${
+        darkMode ? "bg-[#2e2e2e] text-white" : "bg-gray-100 text-black"
+      }`}
+    >
       {/* Header */}
-      <div className="text-center md:text-left mb-10">
+      <div className={`text-center md:text-left mb-10`}>
         <h2 className="text-3xl md:text-4xl font-extrabold">
           Trending Collections
         </h2>
-        <p className="text-gray-400 mt-2">
+        <p className={darkMode ? "text-gray-400 mt-2" : "text-gray-700 mt-2"}>
           Checkout our weekly updated trending collections.
         </p>
       </div>
@@ -21,7 +28,9 @@ const TrendingCollections: FC = () => {
         {[1, 2, 3].map((item) => (
           <div
             key={item}
-            className="bg-[#3a3a3a] p-4 rounded-2xl shadow-md hover:shadow-xl transition"
+            className={`p-4 rounded-2xl shadow-md hover:shadow-xl transition duration-300 ${
+              darkMode ? "bg-[#3a3a3a]" : "bg-white"
+            }`}
           >
             {/* Main Image */}
             <img
@@ -49,14 +58,18 @@ const TrendingCollections: FC = () => {
 
             {/* Title + Author */}
             <div className="mt-4">
-              <h3 className="font-bold text-lg">Collection Two</h3>
+              <h3 className={darkMode ? "font-bold text-lg text-white" : "font-bold text-lg text-black"}>
+                Collection Two
+              </h3>
               <div className="flex items-center gap-2 mt-2">
                 <img
                   src={profileImg}
                   alt="Creator"
                   className="w-6 h-6 rounded-full"
                 />
-                <p className="text-gray-400 text-sm">Jake Sanders</p>
+                <p className={darkMode ? "text-gray-400 text-sm" : "text-gray-700 text-sm"}>
+                  Jake Sanders
+                </p>
               </div>
             </div>
           </div>

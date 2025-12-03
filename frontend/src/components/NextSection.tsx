@@ -1,8 +1,11 @@
-import React from "react";
+import React from "react"; 
+import { useTheme } from "../context/ThemeContext"; // ✅ get darkMode
 
 const NextSection: React.FC = () => {
+  const { darkMode } = useTheme(); // ✅ get darkMode
+
   return (
-    <section className="bg-[#2b2b2b] text-white px-6 md:px-16 py-16">
+    <section className={`px-6 md:px-16 py-16 transition-colors duration-300 ${darkMode ? "bg-[#2b2b2b] text-white" : "bg-white text-black"}`}>
       <div className="overflow-hidden shadow-lg"> 
         <img
           src="/highlight.png"

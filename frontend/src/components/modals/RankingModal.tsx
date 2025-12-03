@@ -1,5 +1,6 @@
 import React from "react";
 import { Trophy } from "lucide-react";
+import { useTheme } from "../../context/ThemeContext"; // ✅ added theme support
 
 interface RankingModalProps {
   isOpen: boolean;
@@ -7,6 +8,8 @@ interface RankingModalProps {
 }
 
 const RankingModal: React.FC<RankingModalProps> = ({ isOpen, onClose }) => {
+  const { darkMode } = useTheme(); // ✅ get darkMode from context
+
   if (!isOpen) return null;
 
   const rankingItems = [
@@ -20,12 +23,22 @@ const RankingModal: React.FC<RankingModalProps> = ({ isOpen, onClose }) => {
   ];
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
-      <div className="bg-[#111] text-white rounded-2xl shadow-xl w-11/12 max-w-3xl p-6 md:p-8 relative">
+    <div
+      className={`fixed inset-0 flex justify-center items-center z-50 ${
+        darkMode ? "bg-black bg-opacity-60" : "bg-white bg-opacity-80"
+      }`}
+    >
+      <div
+        className={`${
+          darkMode ? "bg-[#111] text-white" : "bg-white text-black"
+        } rounded-2xl shadow-xl w-11/12 max-w-3xl p-6 md:p-8 relative`}
+      >
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-200 text-xl"
+          className={`absolute top-4 right-4 ${
+            darkMode ? "text-gray-400 hover:text-gray-200" : "text-gray-600 hover:text-gray-900"
+          } text-xl`}
         >
           &times;
         </button>
@@ -39,7 +52,7 @@ const RankingModal: React.FC<RankingModalProps> = ({ isOpen, onClose }) => {
         </div>
 
         {/* Divider */}
-        <hr className="border-gray-700 mb-6" />
+        <hr className={`mb-6 ${darkMode ? "border-gray-700" : "border-gray-300"}`} />
 
         {/* Two-column list */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6">
@@ -49,7 +62,7 @@ const RankingModal: React.FC<RankingModalProps> = ({ isOpen, onClose }) => {
                 <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
                 <h3 className="font-semibold">{item.title}</h3>
               </div>
-              <p className="text-gray-400 text-sm ml-4">{item.desc}</p>
+              <p className={`text-sm ml-4 ${darkMode ? "text-gray-400" : "text-gray-600"}`}>{item.desc}</p>
             </div>
           ))}
         </div>

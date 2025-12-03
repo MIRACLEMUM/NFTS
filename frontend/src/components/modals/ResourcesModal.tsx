@@ -1,4 +1,5 @@
 import { BookOpen, X } from "lucide-react";
+import { useTheme } from "../../context/ThemeContext"; // ✅ added theme support
 
 interface ResourcesModalProps {
   isOpen: boolean;
@@ -6,6 +7,8 @@ interface ResourcesModalProps {
 }
 
 const ResourcesModal: React.FC<ResourcesModalProps> = ({ isOpen, onClose }) => {
+  const { darkMode } = useTheme(); // ✅ get darkMode from context
+
   if (!isOpen) return null;
 
   const resources = [
@@ -36,10 +39,22 @@ const ResourcesModal: React.FC<ResourcesModalProps> = ({ isOpen, onClose }) => {
   ];
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50">
-      <div className="bg-[#1a1a1a] text-white w-[90%] max-w-3xl rounded-2xl border border-gray-700 shadow-2xl animate-fadeIn">
+    <div
+      className={`fixed inset-0 flex justify-center items-center z-50 ${
+        darkMode ? "bg-black/60" : "bg-white/60"
+      }`}
+    >
+      <div
+        className={`w-[90%] max-w-3xl rounded-2xl border shadow-2xl animate-fadeIn ${
+          darkMode ? "bg-[#1a1a1a] text-white border-gray-700" : "bg-white text-black border-gray-300"
+        }`}
+      >
         {/* Header */}
-        <div className="flex justify-between items-center p-5 border-b border-gray-700">
+        <div
+          className={`flex justify-between items-center p-5 border-b ${
+            darkMode ? "border-gray-700" : "border-gray-300"
+          }`}
+        >
           <div className="flex items-center gap-3">
             <div className="bg-purple-600/20 p-2 rounded-lg">
               <BookOpen className="text-purple-500 w-5 h-5" />
@@ -48,7 +63,9 @@ const ResourcesModal: React.FC<ResourcesModalProps> = ({ isOpen, onClose }) => {
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white transition"
+            className={`transition ${
+              darkMode ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-black"
+            }`}
           >
             <X className="w-6 h-6" />
           </button>
@@ -60,8 +77,12 @@ const ResourcesModal: React.FC<ResourcesModalProps> = ({ isOpen, onClose }) => {
             <div key={index} className="flex items-start gap-3">
               <span className="text-purple-500 mt-2">•</span>
               <div>
-                <h3 className="font-semibold text-white">{item.title}</h3>
-                <p className="text-gray-400 text-sm">{item.desc}</p>
+                <h3 className={`${darkMode ? "text-white" : "text-black"} font-semibold`}>
+                  {item.title}
+                </h3>
+                <p className={`${darkMode ? "text-gray-400" : "text-gray-600"} text-sm`}>
+                  {item.desc}
+                </p>
               </div>
             </div>
           ))}

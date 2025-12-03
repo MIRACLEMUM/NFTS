@@ -1,49 +1,64 @@
-import { X, ShoppingBag } from "lucide-react";
+import React from "react";
+import { Trophy } from "lucide-react";
+import { useTheme } from "../../context/ThemeContext"; // ✅ add this
 
-interface MarketplaceModalProps {
+interface RankingModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const categories = [
-  { name: "Art", desc: "Digital art and illustrations" },
-  { name: "Music", desc: "Music and audio NFTs" },
-  { name: "Video", desc: "Video and animation NFTs" },
-  { name: "Sports", desc: "Sports collectibles and moments" },
-  { name: "Collectibles", desc: "Unique collectibles and assets" },
-  { name: "Photography", desc: "Professional photography NFTs" },
-  { name: "Utility", desc: "NFTs with utility and function" },
-  { name: "Virtual Worlds", desc: "Metaverse and virtual assets" },
-];
+const RankingModal: React.FC<RankingModalProps> = ({ isOpen, onClose }) => {
+  const { darkMode } = useTheme(); // ✅ get darkMode
 
-const MarketplaceModal = ({ isOpen, onClose }: MarketplaceModalProps) => {
   if (!isOpen) return null;
 
+  const rankingItems = [
+    { title: "Top Creators", desc: "Highest performing creators" },
+    { title: "Trending", desc: "Currently trending NFTs" },
+    { title: "Top Buyers", desc: "Most active buyers" },
+    { title: "Volume Leaders", desc: "Highest volume collections" },
+    { title: "Top Collections", desc: "Highest performing collections" },
+    { title: "Top Sellers", desc: "Best performing sellers" },
+    { title: "Activity", desc: "Recent marketplace activity" },
+  ];
+
   return (
-    <div className="fixed inset-0 bg-black/70 flex justify-center items-center z-50 px-4">
-      <div className="bg-[#2e2e2e] w-full max-w-4xl rounded-2xl shadow-lg overflow-hidden border border-gray-700">
-        {/* Header */}
-        <div className="flex justify-between items-center border-b border-gray-700 px-6 py-4">
-          <div className="flex items-center gap-2">
-            <ShoppingBag className="text-purple-400 w-6 h-6" />
-            <h2 className="text-white text-xl font-semibold">
-              Marketplace Categories
-            </h2>
+    <div
+      className={`fixed inset-0 flex justify-center items-center z-50 transition-colors duration-300 ${
+        darkMode ? "bg-black/70" : "bg-gray-200/60"
+      }`}
+    >
+      <div
+        className={`rounded-2xl shadow-xl w-11/12 max-w-3xl p-6 md:p-8 relative transition-colors duration-300 ${
+          darkMode ? "bg-[#111] text-white border border-gray-700" : "bg-white text-black border border-gray-300"
+        }`}
+      >
+        <button
+          onClick={onClose}
+          className={`absolute top-4 right-4 text-xl transition-colors duration-300 ${
+            darkMode ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-black"
+          }`}
+        >
+          &times;
+        </button>
+
+        <div className="flex items-center mb-6">
+          <div className="bg-purple-600 p-2 rounded-lg mr-3">
+            <Trophy className="text-white" size={24} />
           </div>
-          <button onClick={onClose}>
-            <X className="text-gray-400 hover:text-white w-6 h-6" />
-          </button>
+          <h2 className="text-2xl font-bold">{darkMode ? "Rankings" : "Rankings"}</h2>
         </div>
 
-        {/* Categories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-8 py-6 text-gray-300">
-          {categories.map((cat, i) => (
-            <div key={i}>
+        <hr className={`border-b mb-6 ${darkMode ? "border-gray-700" : "border-gray-300"}`} />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6">
+          {rankingItems.map((item, index) => (
+            <div key={index} className="flex flex-col">
               <div className="flex items-center gap-2">
-                <span className="text-purple-400 text-xl">•</span>
-                <h3 className="text-white font-semibold">{cat.name}</h3>
+                <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
+                <h3 className={`font-semibold ${darkMode ? "text-white" : "text-black"}`}>{item.title}</h3>
               </div>
-              <p className="text-sm text-gray-400 ml-5">{cat.desc}</p>
+              <p className={`text-sm ml-4 ${darkMode ? "text-gray-400" : "text-gray-600"}`}>{item.desc}</p>
             </div>
           ))}
         </div>
@@ -52,4 +67,4 @@ const MarketplaceModal = ({ isOpen, onClose }: MarketplaceModalProps) => {
   );
 };
 
-export default MarketplaceModal;
+export default RankingModal;

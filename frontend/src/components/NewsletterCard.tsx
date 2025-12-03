@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Mail } from "lucide-react";
+import { useTheme } from "../context/ThemeContext"; // ✅ import theme hook
 
 export default function NewsletterCard() {
   const [email, setEmail] = useState("");
+  const { darkMode } = useTheme(); // ✅ get darkMode
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -11,7 +13,11 @@ export default function NewsletterCard() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between gap-10 bg-[#2E2E2E] text-white p-12">
+    <div
+      className={`flex flex-col md:flex-row items-center justify-between gap-10 p-12 transition-colors duration-300 ${
+        darkMode ? "bg-[#2E2E2E] text-white" : "bg-gray-100 text-black"
+      }`}
+    >
       {/* Image Section */}
       <div className="w-full md:w-1/2">
         <img
@@ -23,8 +29,10 @@ export default function NewsletterCard() {
 
       {/* Text + Input Section */}
       <div className="flex flex-col items-start md:w-1/2 space-y-5 px-4">
-        <h2 className="text-4xl font-extrabold">Join our weekly digest</h2>
-        <p className="text-gray-300 text-lg">
+        <h2 className={darkMode ? "text-4xl font-extrabold text-white" : "text-4xl font-extrabold text-black"}>
+          Join our weekly digest
+        </h2>
+        <p className={darkMode ? "text-gray-300 text-lg" : "text-gray-700 text-lg"}>
           Get exclusive promotions & updates straight to your inbox.
         </p>
 
